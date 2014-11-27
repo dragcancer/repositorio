@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Thu Nov 27 03:33:04 CET 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0149-ef18-3bb4-000000ae6108 
+on database directory C:\Users\spyro\Desktop\Programas java\ManagmentStore\BaseDeDatos with class loader sun.misc.Launcher$AppClassLoader@1d16e93 
+Loaded from file:/C:/Users/spyro/Desktop/Programas%20java/ManagmentStore/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_11-b12
+user.dir=C:\Users\spyro\Desktop\Programas java\ManagmentStore
+os.name=Windows 7
+os.arch=x86
+os.version=6.1
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
