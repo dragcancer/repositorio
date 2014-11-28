@@ -38,6 +38,7 @@ import ayd.managment.store.vista.VentanaUsuarios;
 public class Aplicacion {	
 	//Variables de clase
 	//DAOs
+	//Bad word
 	MyDataAcces mda= new MyDataAcces();
 	private DAOProductoClase daoProducto = new DAOProductoClase(mda);
 	private DAOUsuarioClase daoUsuario = new DAOUsuarioClase(mda);
