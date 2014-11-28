@@ -38,7 +38,7 @@ import ayd.managment.store.vista.VentanaUsuarios;
 public class Aplicacion {	
 	//Variables de clase
 	//DAOs
-	//Bad word 1234
+	//Bad word 12345
 	MyDataAcces mda= new MyDataAcces();
 	private DAOProductoClase daoProducto = new DAOProductoClase(mda);
 	private DAOUsuarioClase daoUsuario = new DAOUsuarioClase(mda);
