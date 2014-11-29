@@ -1,6 +1,5 @@
 package ayd.managment.store.vista;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -79,7 +78,7 @@ public class VentanaPrincipal extends JFrame {
 				app.ventanaAdmin();
 			}
 		});
-		button.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\Caucasian-Boss-icon.png"));
+		button.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\Caucasian-Boss-icon.png"));
 		button.setBounds(21, 22, 457, 160);
 		panel_1.add(button);
 		
@@ -90,7 +89,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		button_1.setToolTipText("Salir");
-		button_1.setIcon(new ImageIcon("C:\\Users\\Azhala\\workspace\\Ventanas\\Iconos\\Log-Out-icon.png"));
+		button_1.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\Log-Out-icon.png"));
 		button_1.setBounds(21, 201, 457, 160);
 		panel_1.add(button_1);
 		
@@ -107,7 +106,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		btnConsutaRapida.setToolTipText("Consulta R\u00E1pida");
-		btnConsutaRapida.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\Apps-accessories-dictionary-icon.png"));
+		btnConsutaRapida.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\Apps-accessories-dictionary-icon.png"));
 		btnConsutaRapida.setBounds(22, 72, 310, 190);
 		panel_2.add(btnConsutaRapida);
 		
@@ -118,7 +117,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		buttonGenerarPedido.setToolTipText("Generar Pedido");
-		buttonGenerarPedido.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\Apps-basket-icon.png"));
+		buttonGenerarPedido.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\Apps-basket-icon.png"));
 		buttonGenerarPedido.setBounds(22, 274, 310, 190);
 		panel_2.add(buttonGenerarPedido);
 		
@@ -129,7 +128,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		btnVenta.setToolTipText("Venta");
-		btnVenta.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\shop-cart-icon.png"));
+		btnVenta.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\shop-cart-icon.png"));
 		btnVenta.setBounds(342, 274, 310, 187);
 		panel_2.add(btnVenta);
 		
@@ -140,7 +139,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		btnRegistroHoras.setToolTipText("Registro de Horas");
-		btnRegistroHoras.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\clock-icon.png"));
+		btnRegistroHoras.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\clock-icon.png"));
 		btnRegistroHoras.setBounds(342, 72, 310, 190);
 		panel_2.add(btnRegistroHoras);
 	}

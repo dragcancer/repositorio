@@ -83,7 +83,7 @@ public class VentanaPrincipalAdmin extends JFrame {
 				ventana.dispose();
 			}
 		});
-		button.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\user-icon.png"));
+		button.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\user-icon.png"));
 		button.setBounds(21, 22, 457, 160);
 		panel_1.add(button);
 		
@@ -94,7 +94,7 @@ public class VentanaPrincipalAdmin extends JFrame {
 			}
 		});
 		button_1.setToolTipText("Salir");
-		button_1.setIcon(new ImageIcon("C:\\Users\\Azhala\\workspace\\Ventanas\\Iconos\\Log-Out-icon.png"));
+		button_1.setIcon(new ImageIcon("..\\Ventanas\\Iconos\\Log-Out-icon.png"));
 		button_1.setBounds(21, 201, 457, 160);
 		panel_1.add(button_1);
 		
@@ -111,7 +111,7 @@ public class VentanaPrincipalAdmin extends JFrame {
 			}
 		});
 		bntEmpleados.setToolTipText("Empleados");
-		bntEmpleados.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\Apps-system-users-icon (1).png"));
+		bntEmpleados.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\Apps-system-users-icon (1).png"));
 		bntEmpleados.setBounds(22, 72, 203, 190);
 		panel_2.add(bntEmpleados);
 		
@@ -122,7 +122,7 @@ public class VentanaPrincipalAdmin extends JFrame {
 			}
 		});
 		btnReportes.setToolTipText("Reportes");
-		btnReportes.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\Actions-mail-mark-task-icon.png"));
+		btnReportes.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\Actions-mail-mark-task-icon.png"));
 		btnReportes.setBounds(22, 274, 310, 190);
 		panel_2.add(btnReportes);
 		
@@ -133,7 +133,7 @@ public class VentanaPrincipalAdmin extends JFrame {
 			}
 		});
 		bntGastos.setToolTipText("Gastos");
-		bntGastos.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\Apps-kwalletmanager-icon.png"));
+		bntGastos.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\Apps-kwalletmanager-icon.png"));
 		bntGastos.setBounds(342, 274, 310, 187);
 		panel_2.add(bntGastos);
 		
@@ -144,7 +144,7 @@ public class VentanaPrincipalAdmin extends JFrame {
 			}
 		});
 		btnProveedores.setToolTipText("Proveedores");
-		btnProveedores.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\truck-icon.png"));
+		btnProveedores.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\truck-icon.png"));
 		btnProveedores.setBounds(235, 72, 204, 190);
 		panel_2.add(btnProveedores);
 		
@@ -155,7 +155,7 @@ public class VentanaPrincipalAdmin extends JFrame {
 			}
 		});
 		btnProductos.setToolTipText("Productos");
-		btnProductos.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\basket-icon.png"));
+		btnProductos.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\basket-icon.png"));
 		btnProductos.setBounds(449, 72, 203, 190);
 		panel_2.add(btnProductos);
 	}

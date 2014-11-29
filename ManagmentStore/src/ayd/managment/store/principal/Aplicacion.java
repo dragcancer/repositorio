@@ -1,43 +1,8 @@
 package ayd.managment.store.principal;
-import ayd.managment.store.persistencia.clase.DAODiaLaboradoClase;
-import ayd.managment.store.persistencia.clase.DAOHistorialClase;
-import ayd.managment.store.persistencia.clase.DAOProductoClase;
-import ayd.managment.store.persistencia.clase.DAOUsuarioClase;
-import ayd.managment.store.persistencia.clase.DAOVentaClase;
+import ayd.managment.store.persistencia.clase.*;
 import ayd.managment.store.persistencia.clase.MyDataAcces;
-import ayd.managment.store.servicio.Interface.*;
-import ayd.managment.store.servicio.clase.ServicioActualizacionPorLotesClase;
-import ayd.managment.store.servicio.clase.ServicioActualizacionProductoClase;
-import ayd.managment.store.servicio.clase.ServicioActualizacionProveedoresClase;
-import ayd.managment.store.servicio.clase.ServicioActualizacionUsuarioClase;
-import ayd.managment.store.servicio.clase.ServicioAltaProductoClase;
-import ayd.managment.store.servicio.clase.ServicioAltaProveedorClase;
-import ayd.managment.store.servicio.clase.ServicioAltaUsuarioClase;
-import ayd.managment.store.servicio.clase.ServicioBajaProductoClase;
-import ayd.managment.store.servicio.clase.ServicioBajaProveedorClase;
-import ayd.managment.store.servicio.clase.ServicioBajaUsuarioClase;
-import ayd.managment.store.servicio.clase.ServicioConsultaProveedoresClase;
-import ayd.managment.store.servicio.clase.ServicioConsultaRapidaClase;
-import ayd.managment.store.servicio.clase.ServicioGastosClase;
-import ayd.managment.store.servicio.clase.ServicioGenerarHoraEntradaClase;
-import ayd.managment.store.servicio.clase.ServicioGenerarHoraSalidaClase;
-import ayd.managment.store.servicio.clase.ServicioGenerarHorasClase;
-import ayd.managment.store.servicio.clase.ServicioGenerarPedidoClase;
-import ayd.managment.store.servicio.clase.ServicioLoginClase;
-import ayd.managment.store.servicio.clase.ServicioRegistroGastosClase;
-import ayd.managment.store.servicio.clase.ServicioReporteGastosClase;
-import ayd.managment.store.servicio.clase.ServicioReporteMesClase;
-import ayd.managment.store.servicio.clase.ServicioVentaTotalClase;
-import ayd.managment.store.servicio.clase.ServicioVentanaPrincipalAdminClase;
-import ayd.managment.store.servicio.clase.ServicioVentasClase;
-import ayd.managment.store.vista.VentanaGastos;
-import ayd.managment.store.vista.VentanaGenerarReportes;
-import ayd.managment.store.vista.VentanaHoras;
-import ayd.managment.store.vista.VentanaPrincipal;
-import ayd.managment.store.vista.VentanaPrincipalAdmin;
-import ayd.managment.store.vista.VentanaProductos;
-import ayd.managment.store.vista.VentanaProveedores;
-import ayd.managment.store.vista.VentanaUsuarios;
+import ayd.managment.store.servicio.clase.*;
+import ayd.managment.store.vista.*;
 
 public class Aplicacion {	
 	//Variables de clase
