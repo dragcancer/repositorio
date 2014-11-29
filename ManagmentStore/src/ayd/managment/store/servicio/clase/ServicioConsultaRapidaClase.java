@@ -3,6 +3,7 @@ package ayd.managment.store.servicio.clase;
 import java.util.ArrayList;
 
 import ayd.managment.store.persistencia.Intercafe.DAOProducto;
+import ayd.managment.store.persistencia.clase.DAOProductoClase;
 import ayd.managment.store.modelo.Producto;
 import ayd.managment.store.servicio.Interface.ServicioConsultaRapida;
 import ayd.managment.store.vista.VentanaConsultaRapida;
@@ -104,5 +105,8 @@ public class ServicioConsultaRapidaClase implements ServicioConsultaRapida{
 		productos = null;
 		return datosProductos;
 	}
+	public Producto[] getProductos(){
+		daoProducto= new DAOProductoClase();
+		return daoProducto.retriveAll();
+	}
 }
-

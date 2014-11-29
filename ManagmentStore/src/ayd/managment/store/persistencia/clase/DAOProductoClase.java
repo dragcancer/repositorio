@@ -179,14 +179,18 @@ public class DAOProductoClase implements DAOProducto {
 	//regresa todos los productos la base de datos
 	public Producto[] retriveAll() {
 		Producto producto=null; 
+		
 		ArrayList <Producto> productosTemp = new ArrayList <Producto>();
 		try {
+			mda= new MyDataAcces();
 			// Crea el statement
 			// Recibe los resutados
-			ResultSet rs = mda.getQuery("SELECT * FROM Producto");
-
+			ResultSet rs = mda.getQuery("SELECT * FROM producto");
+			System.out.println("entreeeeeee");
+			
 			while(rs.next()){
 				// Crea una nueva instancia del objeto
+
 				producto = new Producto(rs.getString("codigo"), rs.getString("nombre"), rs.getFloat("precioCompra"), rs.getFloat("precioMenudeo"), rs.getFloat("precioMayoreo"), rs.getFloat("cantidadMayoreo"), rs.getString("proveedor"), rs.getFloat("existenciaActual"), rs.getFloat("existenciaMinima"), rs.getFloat("existenciaMaxima"), rs.getInt("tipo"));
 				productosTemp.add(producto);
 			}

@@ -5,55 +5,48 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 
 import ayd.managment.store.servicio.Interface.ServicioLogin;
+import ayd.managment.store.servicio.clase.ServicioLoginClase;
 
-public class VentanaLogin extends JFrame{
-	private ServicioLogin servicioLogin;
-	private JFrame ventana = this;
-	JPanel panel = new JPanel();
-	JTextField id = new JTextField();
-	JLabel iduser = new JLabel("Usuario:");
-	JLabel passuser = new JLabel("Contrasena:");
-	JPasswordField pass = new JPasswordField();
-	JButton aceptar = new JButton("Ingresar");
-	JButton btnSalir = new JButton("Cancelar");
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	JProgressBar pb = new JProgressBar();
-	int width = (int) screenSize.getWidth();
-	int height = (int) screenSize.getHeight();
+public class VentanaLogin extends JFrame {
+	private ServicioLoginClase servicioLogin;
+	private JPanel contentPane;
+	private JFrame ventana=this;
+	private JTextField usuario;
+	private JPasswordField contraseña;
+
+	/**
+	 * Launch the application.
+	 */
 	
-	//Metodo que inicia la vista del Login
-	public  VentanaLogin(ServicioLogin control) {
-		servicioLogin = control;
-		this.setTitle("Autentificacion de encargado");
-		
-		panel.setLayout(new GridLayout(3,2));
-        	
-		//Implementacion del envento en el boton de salir
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				limpia();
-				ventana.setVisible(false);
-				servicioLogin.desbloqueaVentanaPrincipal();
-			}
-		});
-		
-		ventana.addWindowListener( new WindowAdapter() { 
-			public void windowClosing( WindowEvent evt ) { 
-				servicioLogin.desbloqueaVentanaPrincipal();
-			} 
-		}); 
 
-		//Implementacion del envento en el boton de Ingresar
-		aceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {	
+	/**
+	 * Create the frame.
+	 */
+	public VentanaLogin(ServicioLoginClase control) {
+		servicioLogin=control;
+		setIconImage(Toolkit.getDefaultToolkit().getImage("..\\ManagmentStore\\Iconos\\Places-user-identity-icon.png"));
+		setTitle("Login");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 642, 219);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton entrar = new JButton("");
+		entrar.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\Login-in-icon.png"));
+		entrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				if(validadatos())                               
 					JOptionPane.showMessageDialog(ventana,"Hay campos vacios", "Aviso",JOptionPane.WARNING_MESSAGE);                               
 				else{
-					String usuarioid=id.getText();
+					String usuarioid=usuario.getText();
 					@SuppressWarnings("deprecation")
-					String usuariopass=pass.getText();
+					String usuariopass=contraseña.getText();
 					limpia();
 					int resp = servicioLogin.Login(usuarioid,usuariopass);
 					if(resp == 0){
@@ -78,39 +71,102 @@ public class VentanaLogin extends JFrame{
 				}
 			}
 		});
-
-		ventana.setSize(700, 150);
-		iduser.setFont(new Font("Dialog", Font.BOLD, 28));
-		iduser.setForeground(Color.WHITE);
-		iduser.setHorizontalAlignment( SwingConstants.CENTER );
-		panel.add(iduser);
-		id.setFont(new Font("Dialog", Font.BOLD, 28));
-		panel.add(id);
-		passuser.setFont(new Font("Dialog", Font.BOLD, 28));
-		passuser.setForeground(Color.WHITE);
-		passuser.setHorizontalAlignment( SwingConstants.CENTER );
-		panel.add(passuser);
-		pass.setFont(new Font("Dialog", Font.BOLD, 28));
-		panel.add(pass);
-		aceptar.setFont(new Font("Dialog", Font.BOLD, 28));
-		panel.add(aceptar);
-		btnSalir.setFont(new Font("Dialog", Font.BOLD, 28));
-		panel.add(btnSalir, BorderLayout.EAST);
-		panel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
-		ventana.add(panel);
-		ventana.setResizable(false);
-		ventana.setUndecorated(true);
-		ventana.getRootPane().setWindowDecorationStyle(JRootPane.INFORMATION_DIALOG);
+		entrar.setBounds(20, 21, 134, 64);
+	
+		contentPane.add(entrar);
+		
+		JButton salir = new JButton("");
+		salir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		salir.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\Login-out-icon.png"));
+		salir.setBounds(20, 91, 134, 64);
+		
+		salir.setToolTipText("Entrar");
+		contentPane.add(salir);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
+		panel.setBounds(176, 36, 428, 107);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblUsuario = new JLabel("Usuario:");
+		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUsuario.setBounds(23, 31, 86, 14);
+		panel.add(lblUsuario);
+		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
+		lblContrasea.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblContrasea.setBounds(23, 56, 113, 14);
+		panel.add(lblContrasea);
+		lblContrasea.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		usuario = new JTextField();
+		usuario.setBounds(186, 24, 202, 20);
+		panel.add(usuario);
+		usuario.setToolTipText("Ingrese clave de usuario");
+		usuario.setColumns(10);
+		
+		contraseña = new JPasswordField();
+		contraseña.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+			if(arg0.getKeyChar()=='\n'){
+				if(validadatos())                               
+					JOptionPane.showMessageDialog(ventana,"Hay campos vacios", "Aviso",JOptionPane.WARNING_MESSAGE);                               
+				else{
+					String usuarioid=usuario.getText();
+					@SuppressWarnings("deprecation")
+					String usuariopass=contraseña.getText();
+					limpia();
+					int resp = servicioLogin.Login(usuarioid,usuariopass);
+					if(resp == 0){
+						servicioLogin.desbloqueaVentanaPrincipal();
+						servicioLogin.setIntentos(0);
+						setVisible(false);
+					}
+					else{
+						servicioLogin.setIntentos(servicioLogin.getIntentos()+1);
+						if(resp == 1)
+							JOptionPane.showMessageDialog(ventana,"No tiene privilegios para entrar en esta seccion.\nQuedan "+(servicioLogin.getIntentospermitidos()-servicioLogin.getIntentos())+" intento(s).","Error",JOptionPane.ERROR_MESSAGE);
+						if(resp == 2)
+							JOptionPane.showMessageDialog(ventana,"Contrasena invalida.\nQuedan "+(servicioLogin.getIntentospermitidos()-servicioLogin.getIntentos())+" intento(s).","Error",JOptionPane.ERROR_MESSAGE);
+						if(resp == 3)
+							JOptionPane.showMessageDialog(ventana,"Usuario inexistente.\nQuedan "+(servicioLogin.getIntentospermitidos()-servicioLogin.getIntentos())+" intento(s).","Error",JOptionPane.ERROR_MESSAGE);					
+						if(servicioLogin.getIntentos() == servicioLogin.getIntentospermitidos()){
+							JOptionPane.showMessageDialog(getContentPane(),"El sistema ha sido bloqueado.");
+							timer(servicioLogin);
+							getContentPane().setVisible(false);
+						}
+					}
+				}
+			}
+			
+		}
+			
+		});
+		contraseña.setBounds(186, 55, 202, 20);
+		panel.add(contraseña);
+		contraseña.setColumns(10);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(10, 11, 156, 159);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
 	}
 
 	private void limpia(){
-		id.setText("");
-		pass.setText("");
+		usuario.setText("");
+		contraseña.setText("");
 	}
 
 	@SuppressWarnings("deprecation")
 	private boolean validadatos(){
-		if(id.getText().isEmpty() || pass.getText().isEmpty())
+		if(usuario.getText().isEmpty() || contraseña.getText().isEmpty())
 			return true;
 		else
 			return false;
@@ -134,4 +190,8 @@ public class VentanaLogin extends JFrame{
     	};
     	timer.schedule(task,0,1000);
     }
+	
+	
+	
 }
+

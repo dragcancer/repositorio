@@ -17,6 +17,7 @@ import ayd.managment.store.principal.Aplicacion;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 
 public class VentanaPrincipal extends JFrame {
@@ -143,5 +144,4 @@ public class VentanaPrincipal extends JFrame {
 		btnRegistroHoras.setBounds(342, 72, 310, 190);
 		panel_2.add(btnRegistroHoras);
 	}
-
 }

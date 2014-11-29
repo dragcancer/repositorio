@@ -2,6 +2,7 @@ package ayd.managment.store.servicio.Interface;
 
 import java.util.ArrayList;
 
+import ayd.managment.store.modelo.Producto;
 import ayd.managment.store.persistencia.Intercafe.DAOProducto;
 
 public interface ServicioConsultaRapida {
@@ -12,4 +13,5 @@ public interface ServicioConsultaRapida {
 	public boolean buscarProductoNombre(String nombre);
 	public String[] mostrarDatos();
 	public ArrayList<String[]>  mostrarDatosLista();
+	public Producto[] getProductos();
 }

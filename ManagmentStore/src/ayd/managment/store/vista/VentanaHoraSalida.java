@@ -1,138 +1,162 @@
 package ayd.managment.store.vista;
 
+
+import ayd.managment.store.servicio.clase.ServicioGenerarHoraSalidaClase;
+
+
 import java.awt.BorderLayout;
+
+import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GridLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.SpringLayout;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
 
-import ayd.managment.store.servicio.clase.ServicioGenerarHoraEntradaClase;
-import ayd.managment.store.servicio.clase.ServicioGenerarHoraSalidaClase;
-
-
-
-
-
-
-
-
-
-public class VentanaHoraSalida extends VentanaGenerica {
+public class VentanaHoraSalida extends JFrame {
 	private ServicioGenerarHoraSalidaClase servicioGeneraHoraSalida;
 	private java.util.Calendar calendario;
 	private int horas, minutos, segundos;
-	private JButton btnRegistraHora = new JButton("Registra Hora Salida");
-	private DefaultTableModel modeloDiasLaborados = new DefaultTableModel(){
-		public boolean isCellEditable(int rowIndex,int columnIndex){return false;} 
-	}; 
-	//Etiquetas
-	private JLabel lblCodigoEmpleado = new JLabel("Ingrese el código del empleado:");
-	private JLabel lblHora = new JLabel("Hora actual:");
-	
-	//Campos te texto
-	private JTextField txtCodigoEmpleado = new JTextField("");
-	private JTextField txtHoraActual = new JTextField("");
-	
-	private JPanel panel21 = new JPanel();
-	private JPanel panel22 = new JPanel();
-	private JPanel panel23 = new JPanel();
-	private JPanel panel3 = new JPanel();
-	private JPanel panel4 = new JPanel();
+	private JPanel contentPane;
+	private JTextField Empleado;
+	private JTextField hraSalida;
+	private JButton Registrar;
 	private int tecla;
-	private int punto = 0;
-	private int limite = 0;
-	
-	
-	public VentanaHoraSalida(ServicioGenerarHoraSalidaClase servicioGenerarEntrada){
-		super("Hora de Salida","Regresar a ventana \"Empleados\"");
-		servicioGeneraHoraSalida = servicioGenerarEntrada;
+	private Object modeloDiasLaborados;
+	private JButton Buscar;
+
+	/**
+	 * Create the frame.
+	 */
+	public VentanaHoraSalida(ServicioGenerarHoraSalidaClase servicioGenerarEntrada) {
+		servicioGeneraHoraSalida=servicioGenerarEntrada;
 		reloj();
-		btnRegistraHora.setFont(new Font("Dialog", Font.BOLD, 30));
-		panel21.setBackground(UIManager.getColor("Button.focus"));
-		panel22.setBackground(UIManager.getColor("Button.focus"));
-		panel23.setBackground(UIManager.getColor("Button.focus"));
-		panel3.setBackground(UIManager.getColor("Button.focus"));
-		panel4.setBackground(UIManager.getColor("Button.focus"));
-		lblCodigoEmpleado.setFont(new Font("Dialog", Font.BOLD, 28));
-		lblHora.setFont(new Font("Dialog", Font.BOLD, 28));
-		txtCodigoEmpleado.setFont(new Font("Dialog", Font.BOLD, 28));
-		txtHoraActual.setFont(new Font("Dialog", Font.BOLD, 28));
-	
-		modeloDiasLaborados.addColumn("Fecha");
-		modeloDiasLaborados.addColumn("Hora de entrada");
-		modeloDiasLaborados.addColumn("Hora de Salida");
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaHoraSalida.class.getResource("/iconos/Apps-clock-icon.png")));
+		setTitle("Hora Salida");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1302, 664);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		SpringLayout sl_contentPane = new SpringLayout();
+		contentPane.setLayout(sl_contentPane);
 		
-		panel2.setLayout(new BorderLayout(0, 20));
-		panel2.add(panel21, BorderLayout.NORTH);
-		panel2.add(panel22, BorderLayout.CENTER);
-		panel2.add(panel23, BorderLayout.SOUTH);
-		panel21.setLayout(new GridLayout(2, 1, 10, 10));
-		panel21.add(panel3);
-		panel21.add(panel4);
-		panel3.setLayout(new GridLayout(3, 2, 10, 10));
-		panel3.add(lblCodigoEmpleado);
-		panel3.add(txtCodigoEmpleado);
-		panel3.add(lblHora);
-		panel3.add(txtHoraActual);
-		panel4.add(btnRegistraHora);
+		JPanel panel = new JPanel();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, panel, 21, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, panel, 10, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, panel, 604, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, panel, 247, SpringLayout.WEST, contentPane);
+		panel.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
+		contentPane.add(panel);
+		panel.setLayout(null);
 		
+		//..\\ManagmentStore\\Iconos\\Caucasian-Boss-icon.png
+		 Registrar = new JButton("");
+		 Registrar.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\Actions-dialog-ok-apply-icon.png"));
+		//Registrar.setIcon(new ImageIcon(VentanaHoraEntrada.class.getResource("/iconos/Actions-dialog-ok-apply-icon.png")));
+		Registrar.setToolTipText("Realizar registro de hora");
+		Registrar.setBounds(10, 11, 216, 170);
+		panel.add(Registrar);
 		
+		 Buscar = new JButton("");
+		 Buscar.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\search-icon.png"));
+		Buscar.setToolTipText("Buscar empleado");
+		Buscar.setBounds(10, 207, 216, 176);
+		panel.add(Buscar);
 		
-		txtCodigoEmpleado.addKeyListener(new KeyAdapter() {
+		JButton salir = new JButton("");
+		salir.setIcon(new ImageIcon("..\\ManagmentStore\\Iconos\\Actions-edit-delete-icon.png"));
+		salir.setToolTipText("Salir ");
+		salir.setBounds(10, 413, 216, 159);
+		panel.add(salir);
+		
+		JPanel panel_1 = new JPanel();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, panel_1, 94, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, panel_1, 273, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, panel_1, 516, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, panel_1, 1226, SpringLayout.WEST, contentPane);
+		panel_1.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel lblEmpleado = new JLabel("Empleado:");
+		lblEmpleado.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEmpleado.setBounds(69, 144, 111, 24);
+		panel_1.add(lblEmpleado);
+		
+		JLabel lblHorasalida = new JLabel("Hora Salida");
+		lblHorasalida.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblHorasalida.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHorasalida.setBounds(69, 239, 143, 14);
+		panel_1.add(lblHorasalida);
+		
+		Empleado = new JTextField();
+		Empleado.addKeyListener(new KeyAdapter() {
+			@Override
 			public void keyTyped(KeyEvent e) {
-				validaCadenaConEntero(txtCodigoEmpleado.getText(), e);
+				validaCadenaConEntero(hraSalida.getText(), e);
 				activaBoton();
 			}
 		});
 		
-		txtHoraActual.addKeyListener(new KeyAdapter() {
+			
+		Empleado.setFont(new Font("Dialog", Font.PLAIN, 18));
+		Empleado.setBounds(235, 132, 642, 44);
+		panel_1.add(Empleado);
+		Empleado.setColumns(10);
+		
+		hraSalida = new JTextField();
+		hraSalida.addKeyListener(new KeyAdapter() {
+			@Override
 			public void keyTyped(KeyEvent e) {
-				validaEntero(txtHoraActual.getText(), e);
+				validaEntero(hraSalida.getText(), e);
 				activaBoton();
 			}
 		});
-		
-		txtCodigoEmpleado.addKeyListener(new KeyAdapter() {
+		hraSalida.setFont(new Font("Dialog", Font.PLAIN, 18));
+		hraSalida.setColumns(10);
+		hraSalida.setBounds(235, 224, 642, 44);
+		panel_1.add(hraSalida);
+		Registrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		hraSalida.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				activaBoton();
 			}
 		});
-		
-		txtHoraActual.addKeyListener(new KeyAdapter() {
-			public void keyReleased(KeyEvent e) {
-				activaBoton();
-			}
-		});
-		
-		
-		btnRegistraHora.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				while(modeloDiasLaborados.getRowCount()>0)
-					modeloDiasLaborados.removeRow(0);
-				capturaHora();
-				
-				servicioGeneraHoraSalida.salidaHorario(txtHoraActual.getText(),txtCodigoEmpleado.getText());
-				
-			}
-		});
-		
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				limpiarCampos();
-			}
-		});
-	}
 	
+	
+	Registrar.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			servicioGeneraHoraSalida.salidaHorario(hraSalida.getText(),Empleado.getText());
+		}
+	});
+	
+	salir.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			limpiarCampos();
+		}
+	});
+}
 	private void  validaCadenaConEntero(String anterior, KeyEvent e){
 		tecla = (int) e.getKeyChar();
     	if(tecla >= 32 && tecla <= 47 || tecla >=58 && tecla <= 96 || tecla >= 123 && tecla <= 255)
@@ -146,7 +170,7 @@ public class VentanaHoraSalida extends VentanaGenerica {
 	}
 	 
 	private boolean camposNoVacios(){
-		if(txtCodigoEmpleado.getText().isEmpty() || txtHoraActual.getText().isEmpty())
+		if(Empleado.getText().isEmpty() || hraSalida.getText().isEmpty())
 			return false;
 		else
 			return true;
@@ -157,17 +181,16 @@ public class VentanaHoraSalida extends VentanaGenerica {
 	
 	private void activaBoton(){
 		if(camposNoVacios())
-			btnRegistraHora.setEnabled(true);
+			Registrar.setEnabled(true);
 		else
-			btnRegistraHora.setEnabled(false);
+			Registrar.setEnabled(false);
 	}
 	
 	private void limpiarCampos(){
-		while(modeloDiasLaborados.getRowCount()>0)
-			modeloDiasLaborados.removeRow(0);
-		txtCodigoEmpleado.setText("");
-		txtHoraActual.setText("");
-		txtHoraActual.setEditable(false);
+		
+		Empleado.setText("");
+		hraSalida.setText("");
+		hraSalida.setEditable(false);
 	}
 	
 	
@@ -183,12 +206,9 @@ public class VentanaHoraSalida extends VentanaGenerica {
 				minutos = calendario.get(Calendar.MINUTE);
 				segundos = calendario.get(Calendar.SECOND);
 				String hour = String.format(""+"%02d:%02d:%02d",horas,minutos,segundos);
-				txtHoraActual.setText(hour);
+				hraSalida.setText(hour);
 			}
 		});
 		timer.start();
 	}
-
-
-
 }

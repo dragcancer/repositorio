@@ -1,6 +1,6 @@
 package ayd.managment.store.vista;
 
-import java.awt.BorderLayout;
+/*import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -508,4 +508,204 @@ public class VentanaVentas extends VentanaGenerica{
 		else
 			JOptionPane.showMessageDialog(ventana,"No Se Puedo Guardar El Archivo.","Error",JOptionPane.ERROR_MESSAGE);
 	}
+}*/
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
+
+import java.awt.ScrollPane;
+
+import javax.swing.JScrollPane;
+
+import java.awt.Panel;
+
+import javax.swing.JLabel;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
+import javax.swing.JTextField;
+
+import ayd.managment.store.modelo.Producto;
+import ayd.managment.store.servicio.Interface.ServicioVentas;
+
+
+public class VentanaVentas extends JFrame {
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTable tabla;
+	//private String[][] datos={{"Fernando","01213","0"," d","d","c"}};
+	//private String[] cabecera={"nombre","proveedor","telefono"," "," "," "};
+	private JScrollPane js;
+	private JTextField txtBusquedaNombre;
+	private JTextField txtBusquedaCodigo;
+	private JTextField txtTotal;
+	private Producto[] productos;
+	String prod="";
+
+	private DefaultTableModel modeloNombre = new DefaultTableModel(){
+		private static final long serialVersionUID = 1L;
+
+		public boolean isCellEditable(int rowIndex,int columnIndex){return false;} 
+	}; 
+	private ServicioVentas servicioVentas;
+	private JButton btnImprimirTicket;
+	private JButton btnEliminar;
+	private JButton btnAlta;
+	private JButton btnCancelar;
+
+		
+	public VentanaVentas(ServicioVentas control) {
+		servicioVentas=control;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1302, 664);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		//set_Table();
+		JPanel panelMarco = new JPanel();
+		panelMarco.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelMarco.setBounds(53, 22, 1266, 604);
+		contentPane.add(panelMarco);
+		panelMarco.setLayout(null);
+		
+		JPanel panelBotones = new JPanel();
+		panelBotones.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelBotones.setBounds(10, 11, 195, 582);
+		panelMarco.add(panelBotones);
+		panelBotones.setLayout(null);
+		
+		btnAlta = new JButton("");
+		btnAlta.setBounds(10, 11, 171, 149);
+		panelBotones.add(btnAlta);
+		
+		btnEliminar = new JButton("");
+		btnEliminar.setBounds(10, 191, 171, 149);
+		panelBotones.add(btnEliminar);
+		
+		btnImprimirTicket = new JButton("");
+		btnImprimirTicket.setBounds(10, 371, 171, 149);
+		panelBotones.add(btnImprimirTicket);
+		
+		JPanel panelProducto = new JPanel();
+		panelProducto.setBounds(215, 11, 1041, 81);
+		panelMarco.add(panelProducto);
+		panelProducto.setLayout(null);
+		
+		JLabel lblProducto = new JLabel("Producto:");
+		lblProducto.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblProducto.setBounds(10, 30, 124, 29);
+		panelProducto.add(lblProducto);
+		
+		txtBusquedaNombre = new JTextField();
+		txtBusquedaNombre.setBounds(165, 33, 841, 29);
+		panelProducto.add(txtBusquedaNombre);
+		txtBusquedaNombre.setColumns(10);
+		
+		JPanel panelCodigo = new JPanel();
+		panelCodigo.setBounds(215, 103, 1041, 81);
+		panelMarco.add(panelCodigo);
+		panelCodigo.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Codigo producto:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel.setBounds(10, 30, 137, 27);
+		panelCodigo.add(lblNewLabel);
+		
+		txtBusquedaCodigo = new JTextField();
+		txtBusquedaCodigo.setBounds(165, 33, 841, 29);
+		panelCodigo.add(txtBusquedaCodigo);
+		txtBusquedaCodigo.setColumns(10);
+		tabla= new JTable(modeloNombre);
+		modeloNombre.addColumn("Nombre");
+		modeloNombre.addColumn("Cantidad");
+		modeloNombre.addColumn("Precio");
+		js=new JScrollPane (tabla);
+		js.setBounds(215, 195, 1008, 217);
+		panelMarco.add(js);
+		
+		js.setPreferredSize(new Dimension(400,150));
+		
+		btnCancelar = new JButton();
+		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnCancelar.setBounds(958, 533, 265, 60);
+		panelMarco.add(btnCancelar);
+		
+		JLabel lblTotal = new JLabel("Total:");
+		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblTotal.setBounds(958, 464, 46, 30);
+		panelMarco.add(lblTotal);
+		
+		txtTotal = new JTextField();
+		txtTotal.setBounds(1014, 464, 209, 30);
+		panelMarco.add(txtTotal);
+		txtTotal.setColumns(10);
+	//	pruductos
+		
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//limpiarCampos();
+				
+				dispose();
+			}
+		});
+
+		btnAlta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//limpiarCampos();
+				System.out.println("  "+servicioVentas.mostrarDatosLista().size());
+				if(!txtBusquedaNombre.getText().equals("")){
+					if(servicioVentas.buscarProductoNombre(txtBusquedaNombre.getText())){
+					
+					}
+				}else{
+					if(!txtBusquedaCodigo.getText().equals("")){
+						if(servicioVentas.buscarProductoCodigo(txtBusquedaNombre.getText())){
+							servicioVentas.mostrarDatosLista().size();
+						}else{
+							JOptionPane.showMessageDialog(null, "no existe producto");
+						}
+					}else{
+						if(!txtBusquedaCodigo.getText().equals("") && !txtBusquedaNombre.getText().equals("")){
+							JOptionPane.showMessageDialog(null, "no ha seleccionado un codigo o nombre del producto");
+						}
+					}
+				}
+				dispose();
+			}
+		});
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//limpiarCampos();
+				dispose();
+			}
+		});
+
+		btnImprimirTicket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(servicioVentas.guardarVentaPDF()){
+					JOptionPane.showMessageDialog(null,"Guardado Con Exito.");
+					//limpiaCampos();
+				}
+				else
+					JOptionPane.showMessageDialog(null,"No Se Puedo Guardar El Archivo.");
+			}
+		});
+	}
+	
 }
+

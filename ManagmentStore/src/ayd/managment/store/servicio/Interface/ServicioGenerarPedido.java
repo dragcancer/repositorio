@@ -8,5 +8,5 @@ public interface ServicioGenerarPedido {
 	public void inicia();
 	public String[] regresaProveedores();
 	public Producto[] productosProveedor(String proveedor);
-
+	public boolean generarPdf(String[] productos, String[] cantidad);
 }
