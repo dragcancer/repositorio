@@ -1,6 +1,6 @@
 package ayd.managment.store.modelo;
 
-//Modelo para diaLaborado
+//Modelo
 public class DiaLaborado {
 	//Atributos de diaLaborado
 	private String fecha;
