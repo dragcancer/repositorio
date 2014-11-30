@@ -18,6 +18,7 @@ import ayd.managment.store.servicio.clase.ServicioBajaProveedorClase;
 import ayd.managment.store.servicio.clase.ServicioBajaUsuarioClase;
 import ayd.managment.store.servicio.clase.ServicioConsultaProveedoresClase;
 import ayd.managment.store.servicio.clase.ServicioConsultaRapidaClase;
+import ayd.managment.store.servicio.clase.ServicioGastosClase;
 import ayd.managment.store.servicio.clase.ServicioGenerarHoraEntradaClase;
 import ayd.managment.store.servicio.clase.ServicioGenerarHoraSalidaClase;
 import ayd.managment.store.servicio.clase.ServicioGenerarHorasClase;
@@ -27,10 +28,13 @@ import ayd.managment.store.servicio.clase.ServicioRegistroGastosClase;
 import ayd.managment.store.servicio.clase.ServicioReporteGastosClase;
 import ayd.managment.store.servicio.clase.ServicioReporteMesClase;
 import ayd.managment.store.servicio.clase.ServicioVentaTotalClase;
+import ayd.managment.store.servicio.clase.ServicioVentanaPrincipalAdminClase;
 import ayd.managment.store.servicio.clase.ServicioVentasClase;
+import ayd.managment.store.vista.VentanaGastos;
 import ayd.managment.store.vista.VentanaGenerarReportes;
 import ayd.managment.store.vista.VentanaHoras;
 import ayd.managment.store.vista.VentanaPrincipal;
+import ayd.managment.store.vista.VentanaPrincipalAdmin;
 import ayd.managment.store.vista.VentanaProductos;
 import ayd.managment.store.vista.VentanaProveedores;
 import ayd.managment.store.vista.VentanaUsuarios;
@@ -69,14 +73,19 @@ public class Aplicacion {
 	private ServicioRegistroGastosClase servicioRegistroGastos = new ServicioRegistroGastosClase();
 	private ServicioReporteGastosClase servicioReporteGastos = new ServicioReporteGastosClase();
 	private ServicioActualizacionProveedoresClase servicioActualizaProveedor = new ServicioActualizacionProveedoresClase();
+	private ServicioVentanaPrincipalAdminClase servicioVentanaPrincipaladmin = new ServicioVentanaPrincipalAdminClase();
+	private ServicioGastosClase servicioGastos = new ServicioGastosClase() ;
+	
 	
 	//Ventanas
+	private VentanaPrincipalAdmin ventanaPrincipalAdmin = new VentanaPrincipalAdmin(this);
 	private VentanaPrincipal ventana = new VentanaPrincipal(this);
 	private VentanaProductos productos = new VentanaProductos(this);
 	private VentanaUsuarios usuarios = new VentanaUsuarios(this);
 	private VentanaProveedores proveedores = new VentanaProveedores(this);
 	private VentanaGenerarReportes reportes = new VentanaGenerarReportes(this);
-	private VentanaHoras horas;
+	private VentanaHoras horas= new VentanaHoras(this);
+	private VentanaGastos gastos = new VentanaGastos(this);
 	//Main
 	public static void main(String[] args){
 		Aplicacion app = new Aplicacion();
@@ -92,30 +101,35 @@ public class Aplicacion {
 	    ventana.setVisible(true);
 	}
 	
+	public void ventanaPrincipal(){
+		ventana.setVisible(true);
+	}
+	
 	//Un proceso para cada caso de uso en el sistema
 	//Cada proceso tiene su respectivo inicia. Se le mandan los dao que este requiera 
 	public void login(int op){
 		servicioLogin.inicia(op);
-		servicioLogin.servicioLogin(ventana, productos, usuarios, proveedores,reportes, daoUsuario);
+		servicioLogin.servicioLogin(ventana, productos, usuarios, proveedores,reportes, daoUsuario, ventanaPrincipalAdmin);
 	}
 	
 	public void productos(){
-		login(1);
-		//productos.setVisible(true);
+		//login(1);
+		productos.setVisible(true);
 	}
 	
 	public void usuarios(){
-		login(2);
-		//usuarios.setVisible(true);
+		//login(2);
+		usuarios.setVisible(true);
 	}
 	
 	public void proveedores(){
-		login(4);
+		//login(4);
+		proveedores.setVisible(true);
 	}
 	
 	public void reportes(){
-		login(3);
-		//reportes.setVisible(true);
+		//login(3);
+		reportes.setVisible(true);
 	}
 	
 	public void altaProductos(){
@@ -202,6 +216,7 @@ public class Aplicacion {
 	public void ventas(){
 		servicioVentas.inicia();
 		servicioVentas.servicioVentas(daoVenta, daoProducto);
+		
 	}
 	
 	public void reporteMes(){
@@ -215,5 +230,11 @@ public class Aplicacion {
 	}
 	public void actualizaProveedores(){
 		servicioActualizaProveedor.inicia();
+	}
+	public void ventanaAdmin(){
+		login(5);
+	}
+	public void gastos(){
+		gastos.setVisible(true);
 	}
 }

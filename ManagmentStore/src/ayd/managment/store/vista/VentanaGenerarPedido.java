@@ -61,6 +61,7 @@ public class VentanaGenerarPedido extends VentanaGenerica{
 				limpiarJTable();
 				muestraTablaProductos((String) cbxProveedor.getSelectedItem());
 				btnGenerarPedido.setEnabled(false);
+			
 			}
 		});
 		
@@ -74,7 +75,6 @@ public class VentanaGenerarPedido extends VentanaGenerica{
 				btnDescargarPedido.setEnabled(false);
 				btnGenerarPedido.setEnabled(false);
 				cbxProveedor.setSelectedIndex(0); 
-				ventana.dispose();
 				limpiarJTable();
 			}
 		});
@@ -83,9 +83,9 @@ public class VentanaGenerarPedido extends VentanaGenerica{
 		btnSalir.setFont(new Font("Dialog", Font.BOLD, 30));
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				limpiarJTable();
-				cbxProveedor.setSelectedIndex(0);
-				carga_ComboProveedor();
+				//limpiarJTable();
+				//cbxProveedor.setSelectedIndex(0);
+				//carga_ComboProveedor();
 				ventana.dispose();
 			}
 		});

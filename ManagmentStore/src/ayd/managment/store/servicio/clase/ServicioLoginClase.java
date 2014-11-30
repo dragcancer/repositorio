@@ -4,6 +4,7 @@ import ayd.managment.store.persistencia.Intercafe.DAOUsuario;
 import ayd.managment.store.servicio.Interface.ServicioLogin;
 import ayd.managment.store.vista.VentanaLogin;
 import ayd.managment.store.vista.VentanaPrincipal;
+import ayd.managment.store.vista.VentanaPrincipalAdmin;
 import ayd.managment.store.vista.VentanaProductos;
 import ayd.managment.store.vista.VentanaProveedores;
 import ayd.managment.store.vista.VentanaUsuarios;
@@ -16,6 +17,7 @@ public class ServicioLoginClase implements ServicioLogin{
 	private VentanaProveedores ventanaProveedores;
 	private VentanaUsuarios ventanaUsuarios;
 	private VentanaGenerarReportes ventanaGenerarReportes;
+	private VentanaPrincipalAdmin ventanaPrincipalAdmin;
 	private DAOUsuario daoUsuario;
 	private VentanaLogin ventana = new VentanaLogin(this);
 	private int respuesta;
@@ -23,13 +25,14 @@ public class ServicioLoginClase implements ServicioLogin{
 	private int intentospermitidos = 2;
 	//Constructor con referencia a VentanaPrincipal,VentanaProductos,VentanaUsuarios,VentanaGenerarReportes y DAOUsuario.
 	public void servicioLogin(VentanaPrincipal ventanaPrincipal, VentanaProductos ventanaProductos,
-			VentanaUsuarios ventanaUsuarios, VentanaProveedores ventanaProveedores, VentanaGenerarReportes ventanaGenerarReportes, DAOUsuario daoUsuario){
+			VentanaUsuarios ventanaUsuarios, VentanaProveedores ventanaProveedores, VentanaGenerarReportes ventanaGenerarReportes, DAOUsuario daoUsuario, VentanaPrincipalAdmin ventanaPrincipalAdmin){
 		this.ventanaPrincipal = ventanaPrincipal;
 		this.ventanaProductos = ventanaProductos;
 		this.ventanaProveedores = ventanaProveedores;
 		this.ventanaUsuarios = ventanaUsuarios;
 		this.ventanaGenerarReportes = ventanaGenerarReportes;
 		this.daoUsuario = daoUsuario;
+		this.ventanaPrincipalAdmin = ventanaPrincipalAdmin;
 		bloqueaVentanaPrincipal();
 	}
 	//Inicia la ventana de login.
@@ -62,6 +65,9 @@ public class ServicioLoginClase implements ServicioLogin{
 				case 3: ventanaGenerarReportes.setVisible(true);
 						break;
 				case 4: ventanaProveedores.setVisible(true);
+						break;
+				case 5: ventanaPrincipalAdmin.setVisible(true);
+				        ventanaPrincipal.dispose();
 						break;
 				}
 				return 0;                     

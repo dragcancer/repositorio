@@ -1,199 +1,196 @@
 package ayd.managment.store.vista;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
+
+import java.awt.ScrollPane;
+
+import javax.swing.JScrollPane;
+
+import java.awt.Panel;
+
+import javax.swing.JLabel;
+
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
-import ayd.managment.store.modelo.Venta;
-import ayd.managment.store.servicio.Interface.ServicioReporteMes;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
-public class VentanaReporteMes  extends VentanaGenerica{
-	//variables de clase
-		private ServicioReporteMes servicioReporteMes;
-		//botones
-		private JButton btnGenerarReporte = new JButton("Reporte");
-		private DefaultTableModel modeloVentas = new DefaultTableModel(){
-			public boolean isCellEditable(int rowIndex,int columnIndex){return false;} 
-		}; 
-		//Etiquetas
-		private JLabel lblMes = new JLabel("Mes: ");
-		private JLabel lblAnio = new JLabel("Año: ");
-		private JLabel lblCantidad = new JLabel("Total de ventas: ");
-		private JLabel lblTotal = new JLabel("Total: $");
-		private JLabel label1 = new JLabel();
-		private JLabel label2 = new JLabel();
-		//Campos te texto
-		private JTextField txtCantidad = new JTextField("");
-		private JTextField txtTotal = new JTextField("");
-		private JTextField txtAnio = new JTextField("2014");
-	
-		//Combox
-		
-		private JComboBox cbxMes = new JComboBox(new javax.swing.DefaultComboBoxModel(new String[] {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"}));
-		
-		//Tablas
-		private JTable tblVentas = new JTable(modeloVentas);
-		//Scrolls
-		private JScrollPane scrollVentas = new JScrollPane(tblVentas);
-		//Paneles
-		private JPanel panel21 = new JPanel();
-		private JPanel panel22 = new JPanel();
-		private JPanel panel23 = new JPanel();
-		private JPanel panel3 = new JPanel();
-		private JPanel panel4 = new JPanel();
-		
-		private ArrayList<String[]> datosVentas = new ArrayList<String[]>();
-		private int indice;
 
-		public VentanaReporteMes(ServicioReporteMes control){
-			super("Reporte de Mes","Regresar a ventana \"Generar reportes\"");
-			servicioReporteMes = control;
-			colocaFormato();
-			ordenaElementos();
-			deshabilitaCampos();
-			
-			//busca todas las ventas realizadas en el dia y genera el reporte correspondiente
-			btnGenerarReporte.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					//limpiaCampos();
-					Venta[] ventas=servicioReporteMes.generarReporte(""+(cbxMes.getSelectedIndex()+1), txtAnio.getText());
-					String[] aux= new String[4];
-					int j=1;
-					float acumulado=0;
-					for(int i=0;i<ventas.length;i++){
-						aux[0]=""+j;
-						aux[1]=ventas[i].getFecha();
-						aux[2]=ventas[i].getHora();
-						aux[3]=""+ventas[i].getGanancia();
-						acumulado=acumulado+ventas[i].getGanancia();
-						modeloVentas.addRow(aux);
-					}
-					txtTotal.setText(""+acumulado);
-					txtCantidad.setText(""+ventas.length);
+public class VentanaReporteMes extends JFrame {
+
+	private JPanel contentPane;
+	private JTable tblVentas;
+	private DefaultTableModel modeloVentas = new DefaultTableModel(){
+		public boolean isCellEditable(int rowIndex,int columnIndex){return false;} 
+	};
+	private JScrollPane scrollVentas;
+	private JTextField txtAnio;
+	private JTextField txtCantidad;
+	private JTextField txtTotal;
+	private JComboBox cbxMesa; 
+	private ayd.managment.store.servicio.Interface.ServicioReporteMes servicioReporteMes;
+	private ArrayList<String[]> datosVentas = new ArrayList<String[]>();
+	private int indice;
+	public JFrame ventana = this;
+
+	/**
+	 * Launch the application.
+	 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaReporteMes frame = new VentanaReporteMes();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			});
-			
-			//una vez generado el reporte
-			//guarda el total con la fecha en historial
-						//boton salir
-			//deja la ventana limpia
-			btnSalir.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					limpiaCampos();
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public VentanaReporteMes(ayd.managment.store.servicio.Interface.ServicioReporteMes control) {
+		servicioReporteMes = control;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1302, 664);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		set_Table();
+		JPanel panelMarco = new JPanel();
+		panelMarco.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelMarco.setBounds(10, 22, 1266, 593);
+		contentPane.add(panelMarco);
+		panelMarco.setLayout(null);
+		
+		JPanel panelBotones = new JPanel();
+		panelBotones.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelBotones.setBounds(10, 11, 195, 571);
+		panelMarco.add(panelBotones);
+		panelBotones.setLayout(null);
+		
+		JButton btnGenerarReporte = new JButton("");
+		btnGenerarReporte.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\custom-reports-icon.png"));
+		btnGenerarReporte.setToolTipText("Generar Reporte");
+		btnGenerarReporte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ayd.managment.store.modelo.Venta[] ventas=servicioReporteMes.generarReporte(""+(cbxMesa.getSelectedIndex()+1), txtAnio.getText());
+				String[] aux= new String[4];
+				int j=1;
+				float acumulado=0;
+				for(int i=0;i<ventas.length;i++){
+					aux[0]=""+j;
+					aux[1]=ventas[i].getFecha();
+					aux[2]=ventas[i].getHora();
+					aux[3]=""+ventas[i].getGanancia();
+					acumulado=acumulado+ventas[i].getGanancia();
+					modeloVentas.addRow(aux);
 				}
-			});
-		}
-		
-		//coloca el formato a los elementos de la ventana
-		private void colocaFormato(){
-			lblMes.setFont(new Font("Dialog", Font.BOLD, 28));
-			lblAnio.setFont(new Font("Dialog", Font.BOLD, 28));
-			cbxMes.setFont(new Font("Dialog", Font.BOLD, 28));
-			txtAnio.setFont(new Font("Dialog", Font.BOLD, 28));
-			lblCantidad.setFont(new Font("Dialog", Font.BOLD, 28));
-			label2.setFont(new Font("Dialog", Font.BOLD, 68));
-			btnGenerarReporte.setFont(new Font("Dialog", Font.BOLD, 28));
-			panel21.setBackground(UIManager.getColor("Button.focus"));
-			panel22.setBackground(UIManager.getColor("Button.focus"));
-			panel23.setBackground(UIManager.getColor("Button.focus"));
-			panel3.setBackground(UIManager.getColor("Button.focus"));
-			panel4.setBackground(UIManager.getColor("Button.focus"));
-			lblCantidad.setFont(new Font("Dialog", Font.BOLD, 28));
-			lblTotal.setFont(new Font("Dialog", Font.BOLD, 28));
-			txtCantidad.setFont(new Font("Dialog", Font.BOLD, 28));
-			txtTotal.setFont(new Font("Dialog", Font.BOLD, 28));
-			tblVentas.setFont(new Font("Dialog", Font.BOLD, 28));
-			tblVentas.setRowHeight(30);
-			modeloVentas.addColumn("Número");
-			modeloVentas.addColumn("Fecha");
-			modeloVentas.addColumn("Hora");
-			modeloVentas.addColumn("Total");
-		}
-		
-		//ordena los elementos de la ventana
-		public void ordenaElementos(){
-			panel2.setLayout(new BorderLayout(0, 20));
-			panel2.add(panel21, BorderLayout.NORTH);
-			panel2.add(panel22, BorderLayout.CENTER);
-			panel2.add(panel23, BorderLayout.SOUTH);
-			panel21.add(lblMes);
-			panel21.add(cbxMes);
-			panel21.add(lblAnio);
-			panel21.add(txtAnio);
-			panel21.add(label2);
-			panel21.add(btnGenerarReporte);
-			panel22.setLayout(new BorderLayout(0, 20));
-			panel22.add(scrollVentas, BorderLayout.CENTER);	
-			panel23.setLayout(new BorderLayout(3, 5));
-			panel23.add(panel3, BorderLayout.NORTH);
-			panel23.add(panel4, BorderLayout.SOUTH);
-			panel3.setLayout(new GridLayout(1, 5, 0, 0));
-			panel3.add(lblCantidad);
-			panel3.add(txtCantidad);
-			panel3.add(label1);
-			panel3.add(lblTotal);
-			panel3.add(txtTotal);
-		}
-		
-		//deshabilita campos que no se deben editar, especificado en reglas de negocio	
-		private void deshabilitaCampos(){
-			btnGenerarReporte.setEnabled(true);
-			txtTotal.setEditable(false);
-			txtCantidad.setEditable(false);
-		}
-		
-		//deja la ventana limpia
-		private void limpiaCampos(){
-			while(modeloVentas.getRowCount()>0)
-				modeloVentas.removeRow(0);
-			btnGenerarReporte.setEnabled(true);
-			txtCantidad.setText("");
-			txtTotal.setText("");
-			txtAnio.setText("");
-		}
-		
-		//genera el reporte de ventas
-		//busca todas las ventas que coincidan con la fecha y calcula el total
-		private void generarReporte(){
-		}
-		
-		/*private void despliegaDatos(){
-			datosVentas = servicioReporteMes.mostrarDatosLista();
-			for(indice = 0; indice < datosVentas.size(); indice++)
-				modeloVentas.addRow(new String [] {indice+1+"",datosVentas.get(indice)[0],datosVentas.get(indice)[1],datosVentas.get(indice)[2]});
-		}
-		
-		
-		//hace el calculo de las ventas desplegadas en pantalla
-		private void calcularVentas(){
-			ArrayList<String> ventasTotal = new ArrayList<String>();
-			for(indice = 0; indice < tblVentas.getRowCount(); indice++){
-				String v;
-				v = modeloVentas.getValueAt(indice, 3)+"";
-				ventasTotal.add(v);
+				txtTotal.setText(""+acumulado);
+				txtCantidad.setText(""+ventas.length);
 			}
-			if (servicioReporteMes.calcularVentas(ventasTotal)){
-				txtCantidad.setText(tblVentas.getRowCount()+"");
-				txtTotal.setText(servicioReporteMes.muestraTotal()+"");
+			
+		});
+		btnGenerarReporte.setBounds(10, 101, 171, 170);
+		panelBotones.add(btnGenerarReporte);
+		
+		JButton btnRegresar = new JButton("");
+		btnRegresar.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\Actions-go-previous-icon.png"));
+		btnRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ventana.setVisible(false);
 			}
-			else
-				JOptionPane.showMessageDialog(ventana,"FallÃ³ operaciÃ³n al calcular el total.","Error",JOptionPane.ERROR_MESSAGE);
-		}
-		*/
-
-
+		});
+		btnRegresar.setBounds(10, 282, 171, 170);
+		panelBotones.add(btnRegresar);
+		
+		JPanel panelCodigo = new JPanel();
+		panelCodigo.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelCodigo.setBounds(215, 11, 1041, 81);
+		panelMarco.add(panelCodigo);
+		panelCodigo.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Mes:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel.setBounds(69, 34, 64, 27);
+		panelCodigo.add(lblNewLabel);
+		
+		txtAnio = new JTextField();
+		txtAnio.setBounds(794, 32, 192, 29);
+		panelCodigo.add(txtAnio);
+		txtAnio.setColumns(10);
+		
+		JLabel lblAo = new JLabel("A\u00F1o:");
+		lblAo.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblAo.setBounds(726, 32, 137, 27);
+		panelCodigo.add(lblAo);
+		
+		cbxMesa = new JComboBox();
+		cbxMesa.setModel(new DefaultComboBoxModel(new String[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
+		cbxMesa.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		cbxMesa.setBounds(129, 40, 185, 20);
+		panelCodigo.add(cbxMesa);
+		modeloVentas.addColumn("Número");
+		modeloVentas.addColumn("Fecha");
+		modeloVentas.addColumn("Hora");
+		modeloVentas.addColumn("Total");
+		tblVentas= new JTable(modeloVentas);
+		tblVentas.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		scrollVentas=new JScrollPane (tblVentas);
+		scrollVentas.setBounds(215, 118, 1041, 357);
+		panelMarco.add(scrollVentas);
+		
+		scrollVentas.setPreferredSize(new Dimension(400,150));
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel.setBounds(215, 486, 1041, 96);
+		panelMarco.add(panel);
+		panel.setLayout(null);
+		
+		JLabel txtC = new JLabel("Total de venta:");
+		txtC.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		txtC.setBounds(10, 40, 198, 14);
+		panel.add(txtC);
+		
+		txtCantidad = new JTextField();
+		txtCantidad.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		txtCantidad.setBounds(167, 35, 216, 30);
+		panel.add(txtCantidad);
+		txtCantidad.setColumns(10);
+		
+		txtTotal = new JTextField();
+		txtTotal.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		txtTotal.setColumns(10);
+		txtTotal.setBounds(677, 35, 237, 31);
+		panel.add(txtTotal);
+		
+		JLabel lblTotal = new JLabel("Total: $");
+		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblTotal.setBounds(582, 37, 198, 14);
+		panel.add(lblTotal);
+		
+	}
+	public void set_Table(){
+	}
 }

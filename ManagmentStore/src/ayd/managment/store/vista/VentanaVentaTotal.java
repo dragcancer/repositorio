@@ -1,185 +1,234 @@
 package ayd.managment.store.vista;
-
 import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.Dimension;
+import java.awt.EventQueue;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.naming.LimitExceededException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
+
+import java.awt.ScrollPane;
+
+import javax.swing.JScrollPane;
+
+import java.awt.Panel;
+
+import javax.swing.JLabel;
+
+import java.awt.Font;
+import java.util.ArrayList;
+
+import javax.swing.JTextField;
 
 import ayd.managment.store.servicio.Interface.ServicioVentaTotal;
 
-//Heredo de VentanaGenerica
-public class VentanaVentaTotal extends VentanaGenerica{
-	//variables de clase
-	private ServicioVentaTotal servicioVentaTotal;
-	//botones
-	private JButton btnGenerarReporte = new JButton("Generar reporte");
-	private JButton btnGuardarEnHistorial = new JButton("Guardar en historial");
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+
+
+public class VentanaVentaTotal extends JFrame {
+
+	private JPanel contentPane;
+	private JTable tblVentas;
 	private DefaultTableModel modeloVentas = new DefaultTableModel(){
 		public boolean isCellEditable(int rowIndex,int columnIndex){return false;} 
 	}; 
-	//Etiquetas
-	private JLabel lblCantidad = new JLabel("Total de ventas: ");
-	private JLabel lblTotal = new JLabel("Total: $");
-	private JLabel label1 = new JLabel();
-	//Campos te texto
-	private JTextField txtCantidad = new JTextField("");
-	private JTextField txtTotal = new JTextField("");
-	
-	//Tablas	
-	private JTable tblVentas = new JTable(modeloVentas);
-	//Scrolls
-	private JScrollPane scrollVentas = new JScrollPane(tblVentas);
-	//Paneles
-	private JPanel panel21 = new JPanel();
-	private JPanel panel22 = new JPanel();
-	private JPanel panel23 = new JPanel();
-	private JPanel panel3 = new JPanel();
-	private JPanel panel4 = new JPanel();
+	//private String[][] datos={{"Fernando","01213","0"," d","d","c"}};
+	//private String[] cabecera={"N鷐ero","Fecha","Hora","Total"};
+	private JScrollPane sblVentas;
+	private JTextField txtCantidad;
+	private ServicioVentaTotal servicioVentaTotal;
+	private JFrame ventana = this;
 	
 	private ArrayList<String[]> datosVentas = new ArrayList<String[]>();
 	private int indice;
+	private JTextField txtTotal;
 
-	public VentanaVentaTotal(ServicioVentaTotal control){
-		super("Venta total","Regresar a ventana \"Generar reportes\"");
-		servicioVentaTotal = control;
-		colocaFormato();
-		ordenaElementos();
-		deshabilitaCampos();
-		
-		//busca todas las ventas realizadas en el dia y genera el reporte correspondiente
-		btnGenerarReporte.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				generarReporte();
-			}
-		});
-		
-		//una vez generado el reporte
-		//guarda el total con la fecha en historial
-		btnGuardarEnHistorial.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(servicioVentaTotal.guardaEnHistorial()){
-					JOptionPane.showMessageDialog(ventana,"Operaci贸n exitosa al guardar en historial.");				
-					btnGenerarReporte.setEnabled(false);
-					btnGuardarEnHistorial.setEnabled(false);
+	/**
+	 * Launch the application.
+	 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaVentaTotal frame = new VentanaVentaTotal();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				else
-					JOptionPane.showMessageDialog(ventana,"Fall贸 operaci贸n al guardar en historial, ya se ha cargado la venta al historial anteriormente.","Error",JOptionPane.ERROR_MESSAGE);
-			}
-		});
-		
-		//boton salir
-		//deja la ventana limpia
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				limpiaCampos();
 			}
 		});
 	}
-	
-	//coloca el formato a los elementos de la ventana
-	private void colocaFormato(){
-		btnGenerarReporte.setFont(new Font("Dialog", Font.BOLD, 30));
-		btnGuardarEnHistorial.setFont(new Font("Dialog", Font.BOLD, 30));
-		panel21.setBackground(UIManager.getColor("Button.focus"));
-		panel22.setBackground(UIManager.getColor("Button.focus"));
-		panel23.setBackground(UIManager.getColor("Button.focus"));
-		panel3.setBackground(UIManager.getColor("Button.focus"));
-		panel4.setBackground(UIManager.getColor("Button.focus"));
-		lblCantidad.setFont(new Font("Dialog", Font.BOLD, 28));
-		lblTotal.setFont(new Font("Dialog", Font.BOLD, 28));
-		txtCantidad.setFont(new Font("Dialog", Font.BOLD, 28));
-		txtTotal.setFont(new Font("Dialog", Font.BOLD, 28));
-		tblVentas.setFont(new Font("Dialog", Font.BOLD, 28));
-		tblVentas.setRowHeight(30);
-		modeloVentas.addColumn("N锟絤ero");
+
+	/**
+	 * Create the frame.
+	 */
+	public VentanaVentaTotal(ServicioVentaTotal control) {
+		servicioVentaTotal = control;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1302, 664);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		set_Table();
+		JPanel panelMarco = new JPanel();
+		panelMarco.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelMarco.setBounds(10, 22, 1266, 593);
+		contentPane.add(panelMarco);
+		panelMarco.setLayout(null);
+		
+		JPanel panelBotones = new JPanel();
+		panelBotones.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelBotones.setBounds(10, 11, 195, 571);
+		panelMarco.add(panelBotones);
+		panelBotones.setLayout(null);
+		
+		JButton btnGeneraReporte = new JButton("");
+		btnGeneraReporte.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\custom-reports-icon.png"));
+		btnGeneraReporte.setToolTipText("Generar Reporte");
+		btnGeneraReporte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				generarReporte();
+			}		
+		});
+		btnGeneraReporte.setBounds(10, 11, 171, 149);
+		panelBotones.add(btnGeneraReporte);
+		
+		JButton btnGuardarHistorial = new JButton("");
+		btnGuardarHistorial.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\Actions-mail-receive-icon.png"));
+		btnGuardarHistorial.setToolTipText("Guardar en historial");
+		btnGuardarHistorial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(servicioVentaTotal.guardaEnHistorial()){
+					JOptionPane.showMessageDialog(ventana,"Operaci髇 exitosa al guardar en historial.");				
+					//btnGenerarReporte.setEnabled(false);
+					//btnGuardarEnHistorial.setEnabled(false);
+				}
+				else
+					JOptionPane.showMessageDialog(ventana,"Fallo operaci髇 al guardar en historial, ya se ha cargado la venta al historial anteriormente.","Error",JOptionPane.ERROR_MESSAGE);
+			}
+				
+			
+		});
+		btnGuardarHistorial.setBounds(10, 191, 171, 149);
+		panelBotones.add(btnGuardarHistorial);
+		
+		JButton btnSalir = new JButton("");
+		btnSalir.setIcon(new ImageIcon("C:\\Users\\Azhala\\git\\repositorio\\ManagmentStore\\Iconos\\Actions-go-previous-icon.png"));
+		btnSalir.setToolTipText("Regrear");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ventana.dispose();
+			}
+		});
+		btnSalir.setBounds(10, 371, 171, 149);
+		panelBotones.add(btnSalir);
+		
+		JPanel panelCodigo = new JPanel();
+		panelCodigo.setBounds(215, 480, 1041, 81);
+		panelMarco.add(panelCodigo);
+		panelCodigo.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Cantidad:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel.setBounds(10, 30, 137, 27);
+		panelCodigo.add(lblNewLabel);
+		
+		txtCantidad = new JTextField();
+		txtCantidad.setBounds(93, 32, 167, 29);
+		panelCodigo.add(txtCantidad);
+		txtCantidad.setColumns(10);
+		
+		JLabel lblTotal = new JLabel("Total: $");
+		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblTotal.setBounds(704, 30, 88, 27);
+		panelCodigo.add(lblTotal);
+		
+		txtTotal = new JTextField();
+		txtTotal.setColumns(10);
+		txtTotal.setBounds(802, 30, 206, 29);
+		panelCodigo.add(txtTotal);
+		modeloVentas.addColumn("N鷐ero");
 		modeloVentas.addColumn("Fecha");
 		modeloVentas.addColumn("Hora");
 		modeloVentas.addColumn("Total");
+		tblVentas= new JTable(modeloVentas);
+		sblVentas=new JScrollPane (tblVentas);
+		sblVentas.setBounds(215, 11, 1041, 458);
+		panelMarco.add(sblVentas);
+		
+		sblVentas.setPreferredSize(new Dimension(400,150));
+		
+
 	}
-	
-	//ordena los elementos de la ventana
-	public void ordenaElementos(){
-		panel2.setLayout(new BorderLayout(0, 20));
-		panel2.add(panel21, BorderLayout.NORTH);
-		panel2.add(panel22, BorderLayout.CENTER);
-		panel2.add(panel23, BorderLayout.SOUTH);
-		panel21.add(btnGenerarReporte);
-		panel22.setLayout(new BorderLayout(0, 20));
-		panel22.add(scrollVentas, BorderLayout.CENTER);	
-		panel23.setLayout(new BorderLayout(3, 5));
-		panel23.add(panel3, BorderLayout.NORTH);
-		panel23.add(panel4, BorderLayout.SOUTH);
-		panel4.add(btnGuardarEnHistorial, BorderLayout.SOUTH);
-		panel3.setLayout(new GridLayout(1, 5, 0, 0));
-		panel3.add(lblCantidad);
-		panel3.add(txtCantidad);
-		panel3.add(label1);
-		panel3.add(lblTotal);
-		panel3.add(txtTotal);
-	}
-	
+
 	//deshabilita campos que no se deben editar, especificado en reglas de negocio	
 	private void deshabilitaCampos(){
-		btnGenerarReporte.setEnabled(true);
-		btnGuardarEnHistorial.setEnabled(false);
 		txtTotal.setEditable(false);
 		txtCantidad.setEditable(false);
 	}
 	
-	//deja la ventana limpia
-	private void limpiaCampos(){
-		while(modeloVentas.getRowCount()>0)
-			modeloVentas.removeRow(0);
-		btnGuardarEnHistorial.setEnabled(false);
-		btnGenerarReporte.setEnabled(true);
-		txtCantidad.setText("");
-		txtTotal.setText("");
+	
+
+		//genera el reporte de ventas
+		//busca todas las ventas que coincidan con la fecha y calcula el total
+	    private void generarReporte(){
+	    	if(servicioVentaTotal.buscarVentas()){
+	    		//btnGuardarHistorial.setEnabled(false);
+	    		despliegaDatos();
+	    		calcularVentas();
+	    		//btnGuardarHistorial.setEnabled(true);
+	    		}else
+	    			JOptionPane.showMessageDialog(ventana,"No se han realizado ventas este d韆.","Error",JOptionPane.ERROR_MESSAGE);
+	   }
+	    
+	    private void despliegaDatos(){
+	    	datosVentas = servicioVentaTotal.mostrarDatosLista();
+	    	for(indice = 0; indice < datosVentas.size(); indice++)
+	    		modeloVentas.addRow(new String [] {indice+1+"",datosVentas.get(indice)[0],datosVentas.get(indice)[1],datosVentas.get(indice)[2]});
+	    	}
+		
+	    //hace el calculo de las ventas desplegadas en pantalla
+	    private void calcularVentas(){
+	    	ArrayList<String> ventasTotal = new ArrayList<String>();
+	    	for(indice = 0; indice < tblVentas.getRowCount(); indice++){
+	    		String v;
+	    		v = modeloVentas.getValueAt(indice, 3)+"";
+	    		ventasTotal.add(v);
+	    		}
+	    	if (servicioVentaTotal.calcularVentas(ventasTotal)){
+	    		txtCantidad.setText(tblVentas.getRowCount()+"");
+	    		txtTotal.setText(servicioVentaTotal.muestraTotal()+"");					
+	    		}else
+	    			JOptionPane.showMessageDialog(ventana,"Fallo operaci髇 al calcular el total.","Error",JOptionPane.ERROR_MESSAGE);
+		}
+	    
+		//deja la ventana limpia
+		private void limpiaCampos(){
+			while(modeloVentas.getRowCount()>0)
+				modeloVentas.removeRow(0);
+			//btnGuardarEnHistorial.setEnabled(false);
+			//btnGenerarReporte.setEnabled(true);
+			txtCantidad.setText("");
+			txtTotal.setText("");
+		}
+
+		// TODO Auto-generated method stub
+		
+
+
+
+
+	public void set_Table(){
 	}
 	
-	//genera el reporte de ventas
-	//busca todas las ventas que coincidan con la fecha y calcula el total
-	private void generarReporte(){
-		if(servicioVentaTotal.buscarVentas()){
-			btnGenerarReporte.setEnabled(false);
-			despliegaDatos();
-			calcularVentas();
-			btnGuardarEnHistorial.setEnabled(true);
-		}
-		else
-			JOptionPane.showMessageDialog(ventana,"No se han realizado ventas este d铆a.","Error",JOptionPane.ERROR_MESSAGE);
-	}
 	
-	private void despliegaDatos(){
-		datosVentas = servicioVentaTotal.mostrarDatosLista();
-		for(indice = 0; indice < datosVentas.size(); indice++)
-			modeloVentas.addRow(new String [] {indice+1+"",datosVentas.get(indice)[0],datosVentas.get(indice)[1],datosVentas.get(indice)[2]});
-	}
-	
-	//hace el calculo de las ventas desplegadas en pantalla
-	private void calcularVentas(){
-		ArrayList<String> ventasTotal = new ArrayList<String>();
-		for(indice = 0; indice < tblVentas.getRowCount(); indice++){
-			String v;
-			v = modeloVentas.getValueAt(indice, 3)+"";
-			ventasTotal.add(v);
-		}
-		if (servicioVentaTotal.calcularVentas(ventasTotal)){
-			txtCantidad.setText(tblVentas.getRowCount()+"");
-			txtTotal.setText(servicioVentaTotal.muestraTotal()+"");
-		}
-		else
-			JOptionPane.showMessageDialog(ventana,"Fall贸 operaci贸n al calcular el total.","Error",JOptionPane.ERROR_MESSAGE);
-	}
 }
